@@ -1,75 +1,73 @@
-![Course](images/banner.jpg)
+# Applications of AI for Anomaly Detection (NVIDIA DLI)
 
-## Table of Contents
-1. [Description](#description)
-2. [Information](#information)
-3. [File descriptions](#files)
-4. [Certificate](#certificate)
+Repositorio de estudio del taller **Applications of AI for Anomaly Detection** del NVIDIA Deep
+Learning Institute, que completé en octubre de 2026.
 
-<a name="descripton"></a>
-## Description
+**Certificado:** Certificate of Competency, emitido el 1 de octubre de 2026.
+Verificación pública: <https://learn.nvidia.com/certificates?id=v3swaJAnQFCW2ZW2OgkQJQ>
+(copia en [`certificado/`](certificado/)).
 
-Whether your organization needs to monitor cybersecurity threats, fraudulent financial transactions, product defects, or equipment health, artificial intelligence can help catch data abnormalities before they impact your business. AI models can be trained and deployed to automatically analyze datasets, define “normal behavior,” and identify breaches in patterns quickly and effectively. These models can then be used to predict future anomalies. With massive amounts of data available across industries and subtle distinctions between normal and abnormal patterns, it’s critical that organizations use AI to quickly detect anomalies that pose a threat.
+---
 
-In this workshop, we learned how to identify anomalies and failures in time-series data, estimate the remaining useful life of the corresponding parts, and map anomalies to failure conditions. More specifically, how to prepare time-series data for AI model training, develop an XGBoost ensemble tree model, build a deep learning model using a long short-term memory (LSTM) network, and create an autoencoder that detects anomalies for predictive maintenance. At the end of the workshop, we are able to use AI to estimate the condition of equipment and predict when maintenance should be performed.
+## De qué trata el taller
 
-<a name="information"></a>
-## Information
+El problema de fondo es detectar comportamiento anómalo en tráfico de red, usando el dataset de
+intrusiones **KDD Cup 99**: unos 18 millones de registros, con 22 variables numéricas y 9
+categóricas. El taller recorre tres situaciones distintas según lo que uno sabe de los datos:
 
-The overall goals of this course were the following:
-> - Prepare data and build, train, and evaluate models using XGBoost, autoencoders, and GANs;
-> - Detect anomalies in datasets with both labeled and unlabeled data;
-> - Classify anomalies into multiple categories regardless of whether the original data was labeled.
+| Laboratorio | Situación | Técnica | Idea central |
+|---|---|---|---|
+| 1 | Hay etiquetas | **XGBoost acelerado por GPU** (RAPIDS) | Árboles de gradiente que se construyen uno tras otro, cada uno corrigiendo los errores del anterior. Clasificación binaria y luego multiclase. |
+| 2 | No hay etiquetas | **Autoencoder** | Se entrena solo para reconstruir datos normales; un registro que se reconstruye mal (error alto) es sospechoso. Las variables categóricas entran con embeddings en vez de one-hot. |
+| 3 | No se sabe cómo se ven las anomalías, o los datos no son gaussianos | **GAN** | El generador aprende a imitar los datos normales y el discriminador termina sirviendo como detector: asigna baja probabilidad a lo que no se parece a lo normal. |
+| Evaluación | Dataset nuevo | Una de las tres técnicas | Aplicar el método y elegir el umbral de decisión. |
 
-More detailed information and links for the course can be found on the [course website](https://www.nvidia.com/en-us/training/instructor-led-workshops/anomaly-detection/).
+Las tres se comparan con la **curva ROC y el AUC**, y con la elección del umbral según el
+porcentaje de anomalías que se espera encontrar.
 
-<a name="files"></a>
-## File descriptions
+## Lo que me llevo
 
-The description of the files in this repository can be found below:
-- 1 - Anomaly Detection in Network Data Using GPU-Accelerated XGBoost:
-  - [Lab1-Anomaly Detection in Network Data using GPU-Accelerated XGBoost](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Lab1-Anomaly%20Detection%20in%20Network%20Data%20using%20GPU-Accelerated%20XGBoost.ipynb) - Notebook;
-  - [Lab1-preprocess_data](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Lab1-preprocess_data.py) - Script;
-  - [Lab1-Presentation](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Lab1-Presentation.pptx) - Slides;
-<br></br>
-  > Learn how to detect anomalies using supervised learning:
-    > - Prepare data for GPU acceleration using the provided dataset.
-    > - Train a binary and multi-class classifier using the popular machine learning algorithm XGBoost.
-    > - Assess and improve your model’s performance before deployment.
-______________
-- 2 - Anomaly Detection in Network Data Using GPU-Accelerated Autoencoder:
-  - [Lab2-Network Anomaly Detection using Autoencoders](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Lab2-Network%20Anomaly%20Detection%20using%20Autoencoders.ipynb) - Notebook;
-  - [Lab2-preprocess_data](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Lab2-preprocess_data.py) - Script;
-  - [Lab2-Presentation](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Lab2-Presentation.pptx) - Slides;
-<br></br>
-  > Learn how to detect anomalies using modern unsupervised learning:
-    > - Build and train a deep learning-based autoencoder to work with unlabeled data.
-    > - Apply techniques to separate anomalies into multiple classes.
-    > - Explore other applications of GPU-accelerated autoencoders.
-______________
-- 3 - Anomaly Detection in Network Data Using GANs:
-  - [Lab3-Anomaly Detection in Network Data using GANS](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Lab3-Anomaly%20Detection%20in%20Network%20Data%20using%20GANS.ipynb) - Notebook;
-  - [Lab3-preprocess_data](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Lab3-preprocess_data.py) - Script;
-  - [Lab3-Presentation](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Lab3-Presentation.pptx) - Slides;
-<br></br>
-  > Learn how to detect anomalies using GANs:
-    > - Train an unsupervised learning model to create new data.
-    > - Use that new data to turn the problem into a supervised learning problem.
-    > - Compare the performance of this new approach to more established approaches.
-______________
-- 4 - Workshop Assessment - Building and training an Xgboost model, an autoencoder neural network and detecting anomalies using different thresholding methods:
-  - [Workshop Assessment](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Assessment.ipynb) - Notebook;
-  - [Assessment-preprocess_data](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Assessment-preprocess_data.py) - Script;
-  - [Assessment-Presentation](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection/blob/main/Assessment-Presentation.pptx) - Slides;
-<br></br>
-  > Learn how to detect anomalies using GANs:
-    > - Train an unsupervised learning model to create new data.
-    > - Use that new data to turn the problem into a supervised learning problem.
-    > - Compare the performance of this new approach to more established approaches.
+- **El tipo de etiqueta decide el método.** Con etiquetas, un modelo supervisado como XGBoost suele
+  ganar. Sin ellas, el autoencoder convierte el problema en medir qué tan "normal" es cada registro.
+- **El umbral es una decisión de negocio**, no un detalle técnico. Moverlo cambia el balance entre
+  falsos positivos y anomalías que se escapan, y eso se ve directo en la curva ROC.
+- **Acelerar en GPU cambia la forma de trabajar.** Con RAPIDS y XGBoost en GPU se pueden probar
+  muchas más configuraciones en el mismo tiempo, que es lo que más pesa en la etapa de ajuste.
+- **Las variables categóricas importan.** Pasar de one-hot a embeddings cambia lo que el modelo
+  puede aprender de ellas.
 
-<a name="certificate"></a>
-## Certificate
+Este taller conecta con lo que hago en validación de modelos (AUC, umbrales, calibración) y con mi
+interés en el cómputo de alto rendimiento aplicado a la IA.
 
-The certificate for the workshop can be found below:
+## Contenido del repositorio
 
-["Applications of AI for Anomaly Detection" - NVIDIA Deep Learning Institute](https://learn.nvidia.com/certificates?id=Fqog-k82S_-37dzkHCcV2A) (Issued On: March 2023 - date mismatch because of account change)
+| Ruta | Qué es |
+|---|---|
+| `Lab1-...XGBoost.ipynb` | Laboratorio 1: XGBoost acelerado por GPU |
+| `Lab2-...Autoencoders.ipynb` | Laboratorio 2: autoencoders |
+| `Lab3-...GANS.ipynb` | Laboratorio 3: GANs |
+| `Assessment.ipynb` | Evaluación final del taller |
+| `Lab*-preprocess_data.py` | Preprocesamiento del KDD Cup 99 |
+| `Lab*-Presentation.pptx`, `Assessment-Presentation.pptx` | Presentaciones del curso |
+| `materiales_taller_2026/` | Versión de la presentación del laboratorio 1 que se usó en mi edición del taller (44 diapositivas) |
+| `certificado/` | Mi certificado en PDF |
+| `data.tar.gz` | Datos del taller |
+| `images/` | Figuras usadas en los notebooks |
+| `docs/README_original_HROlive.md` | README del repositorio de origen |
+
+> Los notebooks ejecutados provienen del repositorio de origen (ver Créditos). Los laboratorios del
+> DLI corren en la plataforma de NVIDIA, así que mi propia ejecución quedó allí y no está aquí.
+
+## Créditos y uso
+
+- El material del curso (notebooks, presentaciones, datos preparados e imágenes) es del **NVIDIA
+  Deep Learning Institute**.
+- La base de este repositorio es
+  [HROlive/Applications-of-AI-for-Anomaly-Detection](https://github.com/HROlive/Applications-of-AI-for-Anomaly-Detection),
+  cuyo historial se conserva aquí.
+- Por eso este repositorio es **privado** y de uso personal de estudio. Lo propio es el
+  certificado, la presentación de mi edición y este README.
+
+---
+
+Natalia Remolina · [github.com/NatoRemolina](https://github.com/NatoRemolina)
